@@ -1,11 +1,15 @@
 const mongoose = require("mongoose");
 
 const apartmentSchema = new mongoose.Schema({
-  building: { type: String, required: true },
-  code: { type: String, required: true, unique: true },
-  floor: { type: Number, required: true },
-  area: { type: Number },
-  status: { type: String, enum: ["occupied", "vacant"], default: "vacant" }
-}, { timestamps: true });
+  code: { type: String, required: true }, // 👈 Mã căn hộ (ví dụ A101)
+  floor: Number,
+  area: Number,
+  status: { type: String, default: "vacant" },
+  building: String,
+  buildingRef: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Building"
+  }
+});
 
 module.exports = mongoose.model("Apartment", apartmentSchema);

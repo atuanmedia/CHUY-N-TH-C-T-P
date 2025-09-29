@@ -26,3 +26,24 @@ exports.deletePayment = async (req, res) => {
   await Payment.findByIdAndDelete(req.params.id);
   res.json({ message: "Deleted" });
 };
+exports.addPayment = async (req, res) => {
+  try {
+    const invoiceId = req.params.id;
+    const { amount, method } = req.body;
+
+    const payment = new Payment({
+      invoice: invoiceId,
+      amount,
+      method,
+      paidAt: new Date()
+    });
+    await payment.save();
+
+    // cập nhật trạng thái hóa đơn
+    await Invoice.findByIdAndUpdate(invoiceId, { status: "paid" });
+
+    res.status(201).json({ message: "Payment recorded", payment });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
