@@ -16,7 +16,7 @@ function Tickets() {
   const fetchTickets = async () => {
     try {
       const res = await api.get('/tickets');
-      setTickets(res.data || []);
+      setTickets(res.data.tickets || []);
     } catch (err) {
       console.error('fetchTickets', err);
       const msg = err?.response?.data?.message || err?.response?.data?.error || err.message || 'Lỗi khi tải yêu cầu';
@@ -27,7 +27,7 @@ function Tickets() {
   const fetchApartments = async () => {
     try {
       const res = await api.get('/apartments');
-      setApartments(res.data || []);
+      setApartments(res.data.apartments || []);
     } catch (err) {
       console.error('fetchApartments', err);
     }

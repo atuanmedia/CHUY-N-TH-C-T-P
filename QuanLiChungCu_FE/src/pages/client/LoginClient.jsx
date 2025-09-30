@@ -1,48 +1,51 @@
 import { useState } from "react";
-import api from "../../api/axios";
 import { useNavigate } from "react-router-dom";
+import api from "../../api/axios";
+import "../../styles/client-login.css";
 
-function LoginClient() {
+export default function LoginClient() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post("/auth/login", { email, password });
+      const res = await api.post("/auth/login-resident", { email, password });
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("role", "client");
-      navigate("/client/dashboard");
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+      navigate("/");
     } catch (err) {
-      alert("Client login failed");
+      console.error(err);
+      alert(err.response?.data?.error || err.message || "Đăng nhập thất bại");
     }
   };
 
   return (
-    <div className="center" style={{ minHeight: '80vh', padding: 24 }}>
-      <form onSubmit={handleLogin} className="card" style={{ width: 420 }}>
-        <h1 style={{ marginBottom: 12, fontSize: 18, fontWeight: 700 }}>Client Login</h1>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="input"
-          style={{ marginBottom: 10 }}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="input"
-          style={{ marginBottom: 10 }}
-        />
-        <button className="button" style={{ width: '100%' }}>Login</button>
+    <div className="client-login-root">
+      <form className="login-card" onSubmit={handleSubmit}>
+        <h2 className="login-title">Cổng thông tin cư dân</h2>
+        <div className="input-group">
+          <input
+            className="input"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="input-group">
+          <input
+            className="input"
+            type="password"
+            placeholder="Mật khẩu"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <button type="submit" className="login-button">
+          Đăng nhập
+        </button>
       </form>
     </div>
   );
 }
-
-export default LoginClient;

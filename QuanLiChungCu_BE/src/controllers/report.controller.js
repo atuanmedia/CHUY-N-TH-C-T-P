@@ -36,7 +36,7 @@ exports.getAgingReport = async (req, res) => {
   try {
     const today = new Date();
 
-    const invoices = await Invoice.find({ status: { $ne: "paid" } }).populate("apartment");
+    const invoices = await Invoice.find({ status: { $ne: "paid" }, apartment: { $ne: null } }).populate("apartment");
 
     const aging = invoices.map(inv => {
       const dueDate = new Date(inv.dueAt);

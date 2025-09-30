@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const connectDB = require("./src/config/db");
+const authRoutes = require("./src/routes/auth.routes");
 
 const app = express();
 connectDB();
@@ -23,6 +24,7 @@ app.use("/api/notices", require("./src/routes/notice.routes"));
 app.use("/api/logs", require("./src/routes/auditlog.routes"));
 app.use("/api/reports", require("./src/routes/report.routes"));
 app.use("/api/reports", require("./src/routes/report.routes"));
+
 
 
 app.get("/", (req, res) => res.send("API running..."));

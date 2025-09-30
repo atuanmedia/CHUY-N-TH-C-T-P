@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import LoginAdmin from "./pages/admin/LoginAdmin";
 import DashboardAdmin from "./pages/admin/DashboardAdmin";
 import AdminLayout from "./components/admin/AdminLayout";
@@ -8,10 +8,27 @@ import Invoices from "./pages/admin/Invoices";
 import Tickets from "./pages/admin/Tickets";
 import Notices from "./pages/admin/Notices";
 import Reports from "./pages/admin/Reports";
+
+import ClientLayout from "./layouts/ClientLayout";
+import LoginClient from "./pages/client/LoginClient";
+import MyInvoices from "./pages/client/MyInvoices";
+import MyNotices from "./pages/client/MyNotices";
+import MyTickets from "./pages/client/MyTickets";
+import DashboardClient from "./pages/client/DashboardClient";
+
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/login" element={<LoginClient />} />
+        <Route path="/" element={<ClientLayout />}>
+          <Route index element={<Navigate to="/dashboard" />} />
+          <Route path="dashboard" element={<DashboardClient />} />
+          <Route path="my-invoices" element={<MyInvoices />} />
+          <Route path="my-notices" element={<MyNotices />} />
+          <Route path="my-tickets" element={<MyTickets />} />
+        </Route>
+
         {/* Admin layout: đặt tất cả route /admin bên trong để dùng cùng sidebar/header */}
         <Route path="/admin" element={<AdminLayout />}>
           {/* /admin => trang đăng nhập (index route) */}

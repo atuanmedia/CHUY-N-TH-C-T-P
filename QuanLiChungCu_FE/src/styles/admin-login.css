@@ -1,7 +1,4 @@
-/* Reset box sizing */
-* {
-  box-sizing: border-box;
-}
+@import './AdminCommon.css';
 
 .admin-login-root {
   position: fixed;
@@ -9,7 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #e0f2ff, #f3e5f5);
+  background-image: url('../../public/images/banner2.jpg');
   padding: 20px;
   z-index: 9999;
 }
@@ -44,14 +41,14 @@
 }
 
 .admin-login-input {
-  width: 100%;
-  padding: 12px 14px;
+  width: 94%;
+  padding: 12px;
   margin-bottom: 16px;
   border: 1px solid #ccc;
   border-radius: 10px;
   font-size: 1rem;
   background: #f9f9f9;
-  color: #0f172a; /* text color inside input */
+  color: #0f172a; 
   caret-color: var(--primary);
   transition: border-color 0.2s ease;
   display: block;

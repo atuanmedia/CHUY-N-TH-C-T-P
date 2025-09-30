@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary-color: #5e72e4; /* A nice blue */
+  --secondary-color: #f7fafc; /* Light gray */
+  --accent-color: #2dce89; /* A vibrant green */
+  --text-color: #525f7f; /* Darker gray for text */
+  --heading-color: #32325d; /* Dark blue for headings */
+  --main-bg: #f7fafc;
+  --card-bg: #ffffff;
+  --shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  --border-radius: 15px;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  color: var(--text-color);
+}
+
+/* Top Navigation Bar */
+.client-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  height: 70px;
+  background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%);
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.client-topbar-brand {
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: white;
+}
+
+/* Navigation */
+.client-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.client-nav-link {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.client-nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.client-nav-link.active {
+  background-color: rgba(255, 255, 255, 0.25);
+  color: white;
+  font-weight: 600;
+}
+
+.client-nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent-color);
+  border-radius: 50%;
+}
+
+.client-nav-link svg {
+  margin-right: 0.5rem;
+}
+
+/* User Profile & Welcome */
+.client-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.welcome-message {
+  font-size: 1rem;
+  font-weight: 500;
+  background: linear-gradient(45deg, #fb6340, #fbb140);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.user-profile span {
+  font-weight: 600;
+}
+
+/* Logout Button */
+.client-logout-button {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: white;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.client-logout-button:hover {
+  background-color: #f5365c;
+  color: white;
+  border-color: #f5365c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.client-logout-button svg {
+  margin-right: 0.5rem;
+}
+
+/* Main Content */
+.client-main {
+  flex-grow: 1;
+  background-color: var(--main-bg);
+  /* You can replace this with your own image URL */
+  background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+  padding: 2rem;
+  margin-top: 70px; /* Height of the topbar */
+  overflow-y: auto;
+}
+
+/* Footer */
+.client-footer {
+  text-align: center;
+  padding: 1.5rem 0 0 0;
+  color: #888;
+  font-size: 0.9rem;
+}

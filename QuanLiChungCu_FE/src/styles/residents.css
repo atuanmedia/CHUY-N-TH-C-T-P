@@ -1,4 +1,4 @@
-@import './variables.css';
+@import './AdminCommon.css';
 
 /* Residents page styles */
 .residents-root {
@@ -19,8 +19,7 @@
 }
 
 .residents-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr 260px auto;
+  display: flex;
   gap: 12px;
   align-items: center;
   margin-bottom: 18px;
@@ -29,6 +28,7 @@
 .residents-form .input {
   padding: 12px 14px;
   border-radius: 10px;
+  margin: auto;
 }
 
 .residents-form .button {

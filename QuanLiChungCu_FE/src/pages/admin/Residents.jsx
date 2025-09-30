@@ -5,7 +5,7 @@ import "../../styles/residents.css";
 function Residents() {
   const [residents, setResidents] = useState([]);
   const [apartments, setApartments] = useState([]);
-  const [form, setForm] = useState({ fullName: "", email: "", phone: "", apartment: null });
+  const [form, setForm] = useState({ fullName: "", email: "", phone: "", apartment: null, password: "" });
   const [editingId, setEditingId] = useState(null);
 
   // Lấy danh sách residents
@@ -44,11 +44,19 @@ function Residents() {
       const payload = { ...form };
       if (editingId) {
         // update
+        if (!payload.password) {
+          delete payload.password; // không gửi password nếu không thay đổi
+        }
         await api.put(`/residents/${editingId}`, payload);
       } else {
         // create
-        const r = await api.post("/residents", payload);
-        console.log('create response', r);
+        if (!payload.password) {
+          alert('Vui lòng nhập mật khẩu cho cư dân mới');
+          return;
+        }
+        const res = await api.post("/residents", payload);
+        setResidents([...residents, res.data]);
+        alert(`Tạo cư dân thành công.`);
       }
     } catch (err) {
       console.error('handleSubmit error', err);
@@ -56,20 +64,20 @@ function Residents() {
       alert(msg);
       return;
     }
-  setForm({ fullName: "", email: "", phone: "", apartment: null });
+  setForm({ fullName: "", email: "", phone: "", apartment: null, password: "" });
     setEditingId(null);
     fetchResidents();
   };
 
   const handleEdit = (resident) => {
-    setForm({ fullName: resident.fullName || "", email: resident.email || "", phone: resident.phone || "", apartment: resident.apartment?._id || null });
+    setForm({ fullName: resident.fullName || "", email: resident.email || "", phone: resident.phone || "", apartment: resident.apartment?._id || null, password: "" });
     setEditingId(resident._id);
     // scroll to form
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleCancelEdit = () => {
-    setForm({ fullName: "", email: "", phone: "", apartment: null });
+    setForm({ fullName: "", email: "", phone: "", apartment: null, password: "" });
     setEditingId(null);
   };
 
@@ -122,6 +130,14 @@ function Residents() {
             onChange={(e) => setForm({ ...form, phone: e.target.value })}
             className="input"
           />
+          <input
+            type="password"
+            placeholder={editingId ? "Mật khẩu mới (để trống nếu không đổi)" : "Mật khẩu"}
+            value={form.password}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            className="input"
+            autoComplete="new-password"
+          />
           <div style={{ display: 'flex', gap: 8, justifySelf: 'end' }}>
             {editingId ? (
               <>
@@ -132,7 +148,7 @@ function Residents() {
               <button className="button">Thêm</button>
             )}
           </div>
-        </form>
+  </form>
 
         <table className="residents-table">
           <thead>

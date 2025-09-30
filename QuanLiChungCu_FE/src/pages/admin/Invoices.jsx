@@ -13,7 +13,12 @@ function Invoices() {
   const fetchInvoices = async () => {
     try {
       const res = await api.get('/invoices');
-      setInvoices(res.data || []);
+      if (res.data && Array.isArray(res.data.invoices)) {
+        setInvoices(res.data.invoices);
+      } else {
+        console.warn('Expected array for invoices but got:', res.data);
+        setInvoices([]);
+      }
     } catch (err) {
       console.error('fetchInvoices', err);
       const msg = err?.response?.data?.message || err?.response?.data?.error || err.message || 'Lỗi khi tải danh sách hoá đơn';
@@ -53,7 +58,7 @@ function Invoices() {
   };
 
   const handleEdit = (inv) => {
-    setForm({ apartment: inv.apartment?._id || '', periodMonth: inv.periodMonth || '', periodYear: inv.periodYear || '', total: inv.total || '', dueAt: inv.dueAt ? new Date(inv.dueAt).toISOString().slice(0,10) : '', status: inv.status || 'unpaid' });
+    setForm({ apartment: inv.apartment?._id || '', periodMonth: inv.periodMonth || '', periodYear: inv.periodYear || '', total: inv.total || '', dueAt: inv.dueAt ? new Date(inv.dueAt).toISOString().slice(0, 10) : '', status: inv.status || 'unpaid' });
     setEditingId(inv._id);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -95,17 +100,17 @@ function Invoices() {
         <h2 className="residents-title">Quản lý Hoá Đơn</h2>
 
         <form onSubmit={handleSubmit} className="residents-form">
-          <select className="input" value={form.apartment} onChange={(e)=>setForm({...form, apartment: e.target.value})} required>
+          <select className="input" value={form.apartment} onChange={(e) => setForm({ ...form, apartment: e.target.value })} required>
             <option value="">-- Chọn căn hộ --</option>
             {apartments.map(a => (
               <option key={a._id} value={a._id}>{a.building} - {a.code}</option>
             ))}
           </select>
-          <input className="input" placeholder="Tháng" value={form.periodMonth} onChange={e=>setForm({...form, periodMonth: e.target.value})} required />
-          <input className="input" placeholder="Năm" value={form.periodYear} onChange={e=>setForm({...form, periodYear: e.target.value})} required />
-          <input className="input" placeholder="Tổng (VND)" value={form.total} onChange={e=>setForm({...form, total: e.target.value})} />
-          <input className="input" type="date" placeholder="Hạn nộp" value={form.dueAt} onChange={e=>setForm({...form, dueAt: e.target.value})} />
-          <select className="input" value={form.status} onChange={e=>setForm({...form, status: e.target.value})}>
+          <input className="input" placeholder="Tháng" value={form.periodMonth} onChange={e => setForm({ ...form, periodMonth: e.target.value })} required />
+          <input className="input" placeholder="Năm" value={form.periodYear} onChange={e => setForm({ ...form, periodYear: e.target.value })} required />
+          <input className="input" placeholder="Tổng (VND)" value={form.total} onChange={e => setForm({ ...form, total: e.target.value })} />
+          <input className="input" type="date" placeholder="Hạn nộp" value={form.dueAt} onChange={e => setForm({ ...form, dueAt: e.target.value })} />
+          <select className="input" value={form.status} onChange={e => setForm({ ...form, status: e.target.value })}>
             <option value="unpaid">Unpaid</option>
             <option value="paid">Paid</option>
             <option value="overdue">Overdue</option>
@@ -137,15 +142,20 @@ function Invoices() {
           <tbody>
             {invoices.map(inv => (
               <tr key={inv._id}>
-                <td>{inv.apartment ? `${inv.apartment.building} - ${inv.apartment.code}` : '—'}</td>
+                <td>
+                  {inv.apartment
+                    ? `${inv.apartment.code || 'Không có mã'}`
+                    : 'Chưa gán căn hộ'}
+                </td>
+
                 <td>{inv.periodMonth}/{inv.periodYear}</td>
                 <td>{inv.total?.toLocaleString?.() ?? inv.total}</td>
                 <td>{inv.dueAt ? new Date(inv.dueAt).toLocaleDateString() : ''}</td>
                 <td>{inv.status}</td>
                 <td style={{ display: 'flex', gap: 8 }}>
-                  <button type="button" className="button secondary" onClick={()=>handleEdit(inv)}>Sửa</button>
-                  <button type="button" className="button" style={{ background: 'transparent', color: 'var(--danger)', boxShadow: 'none', border: '1px solid rgba(239,68,68,0.12)' }} onClick={()=>handleDelete(inv._id)}>Xoá</button>
-                  <button type="button" className="button" style={{ background: 'transparent', color: 'var(--accent)', boxShadow: 'none', border: '1px solid rgba(6,182,212,0.12)' }} onClick={()=>handleAddPayment(inv._id)}>Thanh toán</button>
+                  <button type="button" className="button secondary" onClick={() => handleEdit(inv)}>Sửa</button>
+                  <button type="button" className="button" style={{ background: 'transparent', color: 'var(--danger)', boxShadow: 'none', border: '1px solid rgba(239,68,68,0.12)' }} onClick={() => handleDelete(inv._id)}>Xoá</button>
+                  <button type="button" className="button" style={{ background: 'transparent', color: 'var(--accent)', boxShadow: 'none', border: '1px solid rgba(6,182,212,0.12)' }} onClick={() => handleAddPayment(inv._id)}>Thanh toán</button>
                 </td>
               </tr>
             ))}

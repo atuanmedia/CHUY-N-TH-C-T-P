@@ -1,0 +1,144 @@
+.my-tickets h2,
+.my-tickets h3 {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.my-tickets h2 {
+  font-size: 1.75rem;
+  margin-bottom: 2rem;
+}
+
+.my-tickets h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.my-tickets h2 svg,
+.my-tickets h3 svg {
+  margin-right: 1rem;
+  color: var(--primary-color);
+}
+
+.create-ticket-form {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(106, 90, 249, 0.25);
+}
+
+.btn-submit {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--primary-color);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-submit:hover {
+  background-color: #5a4af9;
+  transform: translateY(-2px);
+}
+
+.ticket-list {
+  margin-top: 2rem;
+}
+
+.ticket-card {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ticket-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.ticket-card-header {
+  padding: 1.25rem 1.5rem;
+  background-color: #f0f2f5;
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 1.2rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.ticket-card-body {
+  padding: 1.5rem;
+  color: #666;
+}
+
+.ticket-card-footer {
+  padding: 1rem 1.5rem;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #888;
+  border-top: 1px solid #e0e0e0;
+}
+
+.status {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-open {
+  background-color: #28a745;
+}
+
+.status-in-progress {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.status-closed {
+  background-color: #dc3545;
+}

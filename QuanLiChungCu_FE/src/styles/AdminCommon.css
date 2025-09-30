@@ -1,0 +1,172 @@
+/* === General Resets & Root Variables === */
+:root {
+  --primary-hue: 240;
+  --primary-saturation: 70%; /* Increased for more vibrancy */
+  --primary-lightness: 60%; /* Increased for a lighter feel */
+  --primary-color: hsl(var(--primary-hue), var(--primary-saturation), var(--primary-lightness));
+  --primary-color-dark: hsl(var(--primary-hue), var(--primary-saturation), 50%); /* Adjusted hover state */
+  --primary-color-light: hsl(var(--primary-hue), var(--primary-saturation), 95%);
+
+  --secondary-hue: 210;
+  --secondary-saturation: 15%;
+  --text-color: hsl(var(--secondary-hue), var(--secondary-saturation), 25%); /* Slightly lighter text */
+  --text-color-light: hsl(var(--secondary-hue), var(--secondary-saturation), 60%); /* Lighter secondary text */
+  --bg-color: hsl(var(--secondary-hue), var(--secondary-saturation), 98%);
+  --surface-color: #ffffff;
+  --border-color: hsl(var(--secondary-hue), var(--secondary-saturation), 90%);
+  --danger-color: #ef4444;
+
+  --shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* === Layout & Card === */
+.admin-layout-content {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}
+
+.card {
+  background: var(--surface-color);
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  margin-bottom: 2rem;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+}
+
+/* === Forms & Inputs === */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* Thêm khoảng cách giữa label và input */
+  margin-right: 10px;
+}
+
+.form-group label {
+    font-weight: 500;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem; /* Tăng khoảng cách giữa các phần tử */
+  align-items: flex-end;
+}
+
+.input,
+.select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-color-light);
+}
+
+/* === Buttons === */
+.button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--primary-color);
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+.button:hover {
+  background: var(--primary-color-dark);
+}
+
+.button.secondary {
+  background: var(--primary-color-light);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color-light);
+}
+
+.button.secondary:hover {
+  background: hsl(var(--primary-hue), var(--primary-saturation), 90%);
+}
+
+.button.danger {
+    background-color: var(--danger-color);
+}
+
+.button.danger:hover {
+    background-color: #d93737;
+}
+
+/* === Tables === */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+
+.table thead th {
+  background: var(--surface-color);
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-color-light);
+}
+
+.table tbody tr {
+    background-color: var(--surface-color);
+}
+
+.table tbody tr:hover {
+  background-color: var(--primary-color-light);
+}
+
+.table-actions {
+  display: flex;
+  gap: 0.5rem;
+}

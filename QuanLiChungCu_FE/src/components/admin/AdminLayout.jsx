@@ -1,4 +1,6 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import "../../styles/AdminLayout.css";
+import Footer from "../client/Footer";
 
 function AdminLayout() {
   const navigate = useNavigate();
@@ -9,32 +11,24 @@ function AdminLayout() {
   };
 
   return (
-    <div className="app-root">
-      {/* Sidebar */}
-      <aside className="sidebar">
+    <div className="admin-layout">
+      <header className="admin-header">
         <div className="brand">Admin Panel</div>
-        <nav className="nav-links">
-          <Link to="/admin/dashboard">🏠 Dashboard</Link>
-          <Link to="/admin/residents">👥 Cư dân</Link>
-          <Link to="/admin/apartments">🏢 Căn hộ</Link>
-          <Link to="/admin/invoices">📑 Hóa đơn</Link>
-          <Link to="/admin/tickets">📬 Phản ánh</Link>
-          <Link to="/admin/notices">📢 Thông báo</Link>
-          <Link to="/admin/reports">📊 Báo cáo</Link>
+        <nav className="admin-nav">
+          <Link to="/admin/dashboard">Dashboard</Link>
+          <Link to="/admin/residents">Cư dân</Link>
+          <Link to="/admin/apartments">Căn hộ</Link>
+          <Link to="/admin/invoices">Hóa đơn</Link>
+          <Link to="/admin/tickets">Phản ánh</Link>
+          <Link to="/admin/notices">Thông báo</Link>
+          <Link to="/admin/reports">Báo cáo</Link>
         </nav>
-        <button onClick={handleLogout} className="button logout-btn">🚪 Đăng xuất</button>
-      </aside>
-
-      <div className="content-area">
-        <header className="card" style={{ margin: 12 }}>
-          <h1 style={{ margin: 0, fontSize: 20, fontWeight: 700 }}>Hệ thống quản lý chung cư</h1>
-          <div className="muted">Xin chào, Admin 👋</div>
-        </header>
-
-        <main className="main-content">
-          <Outlet />
-        </main>
-      </div>
+        <button onClick={handleLogout} className="logout-btn">Đăng xuất</button>
+      </header>
+      <main className="admin-main">
+        <Outlet />
+      </main>
+      <Footer />
     </div>
   );
 }

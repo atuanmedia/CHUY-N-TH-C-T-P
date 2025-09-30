@@ -6,15 +6,9 @@ function Apartments() {
   const [items, setItems] = useState([]);
   const [selected, setSelected] = useState(null);
   const [form, setForm] = useState({ building: "", code: "", floor: "", area: "", status: "vacant" });
-  const [buildings, setBuildings] = useState([]);
   const [editingId, setEditingId] = useState(null);
 
   useEffect(() => { fetchItems(); }, []);
-  useEffect(()=>{ fetchBuildings(); }, []);
-
-  const fetchBuildings = async ()=>{
-    try{ const r = await api.get('/buildings'); setBuildings(r.data || []); } catch(e){ console.error('fetch buildings', e); }
-  };
 
   const fetchItems = async () => {
     try {
@@ -79,11 +73,6 @@ function Apartments() {
 
         <form onSubmit={handleSubmit} className="apartments-form">
           <input className="input" placeholder="Tòa / block" value={form.building} onChange={e=>setForm({...form, building:e.target.value})} required />
-          <select className="input" value={form.buildingRef || ""} onChange={e=>setForm({...form, buildingRef: e.target.value || null, building: buildings.find(b=>b._id===e.target.value)?.name || '' })}>
-            <option value="">-- Chọn tòa (hoặc nhập tên) --</option>
-            {buildings.map(b=> <option key={b._id} value={b._id}>{b.name}</option>)}
-          </select>
-          <input className="input" placeholder="Tòa / block (hoặc gõ)" value={form.building} onChange={e=>setForm({...form, building:e.target.value})} required />
           <input className="input" placeholder="Mã căn hộ" value={form.code} onChange={e=>setForm({...form, code:e.target.value})} required />
           <input className="input" placeholder="Tầng" value={form.floor} onChange={e=>setForm({...form, floor:e.target.value})} />
           <input className="input" placeholder="Diện tích (m2)" value={form.area} onChange={e=>setForm({...form, area:e.target.value})} />

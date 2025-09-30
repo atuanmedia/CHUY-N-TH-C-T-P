@@ -1,5 +1,6 @@
 const Resident = require("../models/Resident");
 const Apartment = require("../models/Apartment");
+const bcrypt = require("bcryptjs");
 
 // ➕ Tạo cư dân
 exports.createResident = async (req, res) => {
@@ -17,6 +18,13 @@ exports.createResident = async (req, res) => {
       if (!apt) return res.status(400).json({ message: "Apartment not found" });
     }
 
+    // Mã hóa mật khẩu do admin cấp
+    if (payload.password) {
+      payload.password = await bcrypt.hash(payload.password, 10);
+    } else {
+      return res.status(400).json({ message: "Password is required" });
+    }
+
     const resident = new Resident(payload);
     await resident.save();
 
@@ -25,14 +33,12 @@ exports.createResident = async (req, res) => {
       await Apartment.findByIdAndUpdate(resident.apartment, { status: "occupied" });
     }
 
-    res.status(201).json(await resident.populate({
+    const populatedResident = await resident.populate({
       path: "apartment",
-      select: "code floor status building",
-      populate: {
-        path: "buildingRef",
-        select: "name"
-      }
-    }));
+      select: "code floor status"
+    });
+
+    res.status(201).json(populatedResident);
   } catch (err) {
     console.error("createResident error:", err);
     res.status(500).json({ message: "Server error" });
@@ -44,11 +50,7 @@ exports.getResidents = async (req, res) => {
   try {
     const residents = await Resident.find().populate({
       path: "apartment",
-      select: "code floor status building",
-      populate: {
-        path: "buildingRef",
-        select: "name"
-      }
+      select: "code floor status"
     });
     res.json(residents);
   } catch (err) {
@@ -62,11 +64,7 @@ exports.getResident = async (req, res) => {
   try {
     const resident = await Resident.findById(req.params.id).populate({
       path: "apartment",
-      select: "code floor status building",
-      populate: {
-        path: "buildingRef",
-        select: "name"
-      }
+      select: "code floor status"
     });
     if (!resident) return res.status(404).json({ message: "Resident not found" });
     res.json(resident);
@@ -80,6 +78,12 @@ exports.getResident = async (req, res) => {
 exports.updateResident = async (req, res) => {
   try {
     const payload = { ...req.body };
+
+    if (payload.password && payload.password.length > 0) {
+      payload.password = await bcrypt.hash(payload.password, 10);
+    } else {
+      delete payload.password;
+    }
 
     if (!payload.apartment || payload.apartment === "") {
       payload.apartment = null;
@@ -99,11 +103,7 @@ exports.updateResident = async (req, res) => {
       { new: true, runValidators: true }
     ).populate({
       path: "apartment",
-      select: "code floor status building",
-      populate: {
-        path: "buildingRef",
-        select: "name"
-      }
+      select: "code floor status"
     });
 
     // xử lý thay đổi apartment
